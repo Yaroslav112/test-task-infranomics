@@ -4,33 +4,41 @@ import { setSelectedCategory } from "../../store/table-slice";
 import { useAppDispatch } from "../../store";
 
 type EventProps = {
-    target: {
-        value: string;
-    };
+  target: {
+    value: string;
+  };
 }
 
 interface SelectedCategoryProps {
-    selectedCategory: string | null
+  selectedCategory: string | null
 }
 
-const SelectComponent:FC<SelectedCategoryProps> = ({selectedCategory}) => {
-    const dispatch = useAppDispatch();
+const selectOptions = [
+  { value: 'All', label: 'All' },
+  { value: 'tech solutions', label: 'Tech Solutions' },
+  { value: 'mobile innovations', label: 'Mobile Innovations' },
+  { value: 'home appliances', label: 'Home Appliances' },
+];
 
-    const handleCategoryChange = (event: EventProps) => {
-        dispatch(setSelectedCategory(event.target.value));
-    };
+const SelectComponent: FC<SelectedCategoryProps> = ({ selectedCategory}) => {
+  const dispatch = useAppDispatch();
 
-    return (
-        <Select
-            value={!selectedCategory ? 'All' : selectedCategory}
-            onChange={handleCategoryChange}
-        >
-            <MenuItem value="All">All</MenuItem>
-            <MenuItem value="tech solutions">Tech Solutions</MenuItem>
-            <MenuItem value="mobile innovations">Mobile Innovations</MenuItem>
-            <MenuItem value="home appliances">Home Appliances</MenuItem>
-        </Select>
-    )
+  const handleCategoryChange = (event: EventProps) => {
+    dispatch(setSelectedCategory(event.target.value));
+  };
+
+  const currentCategory = !selectedCategory ? 'All' : selectedCategory;
+
+  return (
+    <Select
+      value={currentCategory}
+      onChange={handleCategoryChange}
+    >
+      {selectOptions.map((item, index) => (
+        <MenuItem key={index} value={item.value}>{item.label}</MenuItem>
+      ))}
+    </Select>
+  )
 }
 
 export default SelectComponent;

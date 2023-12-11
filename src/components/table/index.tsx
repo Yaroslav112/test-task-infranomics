@@ -10,39 +10,39 @@ import { setOrder, setOrderBy } from "../../store/table-slice";
 import { useAppDispatch } from "../../store";
 
 interface TableComponentProps {
-    order: 'asc' | 'desc',
-    orderBy: string,
-    sortedRows: SalesDataProps[]
+  order: 'asc' | 'desc',
+  orderBy: string,
+  sortedRows: SalesDataProps[]
 }
 
-const TableComponent:FC<TableComponentProps> = ({ order, orderBy, sortedRows }) => {
-    const dispatch = useAppDispatch();
+const TableComponent: FC<TableComponentProps> = ({ order, orderBy, sortedRows}) => {
+  const dispatch = useAppDispatch();
 
-    const handleRequestSort = (event: MouseEvent<unknown>, property: keyof SalesDataProps) => {
-        const isAsc = orderBy === property && order === 'asc';
+  const handleRequestSort = (_: any, property: keyof SalesDataProps) => {
+    const isAsc = orderBy === property && order === 'asc';
 
-        dispatch(setOrder(isAsc ? 'desc' : 'asc'));
-        dispatch(setOrderBy(property));
-    };
+    dispatch(setOrder(isAsc ? 'desc' : 'asc'));
+    dispatch(setOrderBy(property));
+  };
 
-    return (
-        <Paper sx={{ width: 'auto', mb: 2 }}>
-            <TableContainer>
-                <Table sx={{ minWidth: 580, borderRadius: "10px" }} aria-labelledby="tableTitle">
-                    <TableHeader
-                        order={order}
-                        orderBy={orderBy}
-                        onRequestSort={handleRequestSort}
-                    />
-                    <TableBody>
-                        {sortedRows.map((row: SalesDataProps, index: Key) => (
-                            <CustomTableRow key={index} row={row} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Paper>
-    )
+  return (
+    <Paper sx={{ width: 'auto', mb: 2 }}>
+      <TableContainer>
+        <Table sx={{ minWidth: 580, borderRadius: "10px" }} aria-labelledby="tableTitle">
+          <TableHeader
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+          />
+          <TableBody>
+            {sortedRows.map((row: SalesDataProps, index: Key) => (
+              <CustomTableRow key={index} row={row}/>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
+  )
 }
 
 export default TableComponent;
